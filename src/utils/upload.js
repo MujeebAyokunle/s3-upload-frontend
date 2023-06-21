@@ -26,7 +26,7 @@ export class Uploader {
     this.fileKey = null
     this.onProgressFn = () => { }
     this.onErrorFn = () => { }
-    
+    this.finalresponse = {}
   }
 
   start() {
@@ -37,7 +37,7 @@ export class Uploader {
     try {
       // adding the the file extension (if present) to fileName
       let fileName = this.fileName
-      
+
       const ext = this.file.name.split(".").pop()
       if (ext) {
         fileName += `.${ext}`
@@ -72,7 +72,7 @@ export class Uploader {
         method: "POST",
         data: AWSMultipartFileDataInput,
       })
-      
+
       const newParts = urlsResponse.data.parts
       this.parts.push(...newParts)
 
@@ -150,7 +150,14 @@ export class Uploader {
         data: videoFinalizationMultiPartInput,
       })
 
-      console.log("final_resp", final_resp)
+      // return new Promise((resolve, reject) => {
+        this.onProgressFn({
+
+          final_response: final_resp
+        })
+      //   resolve()
+      // })
+      // console.log("final_resp", final_resp)
     }
   }
 
@@ -195,7 +202,7 @@ export class Uploader {
       this.onProgressFn({
         sent: sent,
         total: total,
-        percentage: percentage,
+        percentage: percentage,        
       })
     }
   }
