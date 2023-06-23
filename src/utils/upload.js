@@ -2,7 +2,7 @@ import axios from "axios"
 
 // initializing axios
 const api = axios.create({
-  baseURL: "http://localhost:8080/api",
+  baseURL: "https://44.203.134.24.nip.io/api",
 })
 
 
@@ -151,10 +151,10 @@ export class Uploader {
       })
 
       // return new Promise((resolve, reject) => {
-        this.onProgressFn({
+      this.onProgressFn({
 
-          final_response: final_resp
-        })
+        final_response: final_resp
+      })
       //   resolve()
       // })
       // console.log("final_resp", final_resp)
@@ -202,7 +202,7 @@ export class Uploader {
       this.onProgressFn({
         sent: sent,
         total: total,
-        percentage: percentage,        
+        percentage: percentage,
       })
     }
   }
