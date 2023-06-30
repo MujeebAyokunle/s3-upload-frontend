@@ -139,7 +139,7 @@ function App() {
     formData.append("series", JSON.stringify(false))
 
     try {
-      const complete_resp = await axios.post("https://44.203.134.24.nip.io/api/finalizemovieupload", formData)
+      const complete_resp = await axios.post("http://localhost:8080/api/finalizemovieupload", formData)
 
       console.log("complete_resp", complete_resp)
     } catch (err) {
