@@ -13,6 +13,34 @@ function App() {
   const [uploader, setUploader] = useState(undefined)
   const [trailerUploader, setTrailerUploader] = useState(undefined)
 
+  const [title, setTitle] = useState('')
+  const [genre, setGenre] = useState('')
+  const [qc_notes, setQc_notes] = useState('')
+  const [video_language, setVideo_language] = useState('')
+  const [crow_exlusive, setCrow_exlusive] = useState('')
+  const [trailer_qc_notes, setTrailer_qc_notes] = useState('')
+  const [country, setCountry] = useState('')
+  const [year, setYear] = useState('')
+  const [copyrights, setCopyrights] = useState('')
+  const [production_company, setProduction_company] = useState('')
+  const [tags, setTags] = useState('')
+  const [locations, setLocations] = useState('')
+  const [casts, setCasts] = useState('')
+  const [vendor_id, setVendor_id] = useState('')
+  const [sku, setSku] = useState('')
+  const [imdb_id, setImdb_id] = useState('')
+  const [imdb_rating, setImdb_rating] = useState('')
+  const [imdb_votes, setImdb_votes] = useState('')
+  const [content_rating, setContent_rating] = useState('')
+  const [content_rating_reasons, setContent_rating_reasons] = useState('')
+  const [series, setSeries] = useState('')
+  const [text_tracks, setText_tracks] = useState('')
+  const [text_tracks_kind, setText_tracks_kind] = useState('')
+  const [text_tracks_frame_rate, setText_tracks_frame_rate] = useState('')
+
+
+
+
   // useEffect(() => {
 
   // }, [file])
@@ -111,32 +139,35 @@ function App() {
     formData.append("images", image)
 
     // Logo
-    formData.append("logo", logo)
+    formData.set("logo", logo)
 
-    formData.append("title", "Unpredictable Test")
-    formData.append("genre", "drama")
-    formData.append("qc_notes", "A prediction movie is a film that explores a future scenario or makes projections about what might happen in the future. It often involves elements of science fiction, speculation, and imagination to depict potential advancements, societal changes, or events that have not yet occurred. These movies offer audiences a glimpse into possible futures, sparking curiosity and contemplation about the direction our world could take.")    
-    formData.append("video_type", "mp4")
-    formData.append("video_language", "english")
-    formData.append("video_url", movieUrl)
-    formData.append("crow_exlusive", JSON.stringify(false))
-    formData.append("trailer_url", trailerUrl)
-    formData.append("trailer_qc_notes", "A prediction movie is a film that explores a future scenario or makes projections about what might happen in the future.")
-    formData.append("country", "nigeria")
-    formData.append("year", "2023")
-    formData.append("copyrights", "Copyright © 2023 crow+. All rights reserved.")
-    formData.append("production_company", "crow+")
-    formData.append("tags", JSON.stringify(["Action-packed", "Inspiring"]))
-    formData.append("locations", "nigeria")
-    formData.append("casts", JSON.stringify(["Jerry", "Munah", "Francis"]))
-    formData.append("vendor_id", "123456")
-    formData.append("sku", "")
-    formData.append("imdb_id", "1234")
-    formData.append("imdb_rating", "9/10")
-    formData.append("imdb_votes", "2300")
-    formData.append("content_rating", "8/10")
-    formData.append("content_rating_reasons", "Greate content with high quality resolution")
-    formData.append("series", JSON.stringify(false))
+    formData.set("title", title)
+    formData.set("genre", genre)
+    formData.set("qc_notes", qc_notes)
+    formData.set("video_type", "mp4")
+    formData.set("video_language", video_language)
+    formData.set("video_url", movieUrl)
+    formData.set("crow_exlusive", crow_exlusive)
+    formData.set("trailer_url", trailerUrl)
+    formData.set("trailer_qc_notes", trailer_qc_notes)
+    formData.set("country", country)
+    formData.set("year", year)
+    formData.set("copyrights", copyrights)
+    formData.set("production_company", production_company)
+    formData.set("tags", JSON.stringify([tags]))
+    formData.set("locations", locations)
+    formData.set("casts", JSON.stringify(casts))
+    formData.set("vendor_id", vendor_id)
+    formData.set("sku", sku)
+    formData.set("imdb_id", imdb_id)
+    formData.set("imdb_rating", imdb_rating)
+    formData.set("imdb_votes", imdb_votes)
+    formData.set("content_rating", content_rating)
+    formData.set("content_rating_reasons", content_rating_reasons)
+    formData.set("series", JSON.stringify(series))    
+    formData.set("text_tracks", text_tracks)
+    formData.set("text_tracks_kind", text_tracks_kind)
+    formData.set("text_tracks_frame_rate", text_tracks_frame_rate)
 
     try {
       const complete_resp = await axios.post("http://localhost:8080/api/finalizemovieupload", formData)
@@ -150,6 +181,116 @@ function App() {
 
   return (
     <div className="App">
+      <h4>title</h4>
+      <input type="text" value={title} onChange={(event) => setTitle(event.target.value)} />
+
+      <h4>genre</h4>
+      <select onChange={(event) => setGenre(event.target.value)} value={genre} >
+        <option value={""}>...</option>
+        <option value={"drama"}>Drama</option>
+      </select>
+
+      <h4>qc notes</h4>
+      <input type="text" value={qc_notes} onChange={(event) => setQc_notes(event.target.value)} />
+
+      <h4>video language</h4>
+      <select onChange={(event) => setVideo_language(event.target.value)} value={video_language} >
+        <option value={""}>...</option>
+        <option value={"english"}>English</option>
+      </select>
+
+      <h4>Subtitle language</h4>
+      <select onChange={(event) => setText_tracks(event.target.value)} value={text_tracks} >
+        <option value={""}>...</option>
+        <option value={"english"}>English</option>
+      </select>
+
+      <h4>Subtitle kind</h4>
+      <select onChange={(event) => setText_tracks_kind(event.target.value)} value={text_tracks_kind} >
+        <option value={""}>...</option>
+        <option value={"standard subtitles"}>Standard Subtitles</option>
+      </select>
+
+      <h4>Subtitle frame rate</h4>
+      <select onChange={(event) => setText_tracks_frame_rate(event.target.value)} value={text_tracks_frame_rate} >
+        <option value={""}>...</option>
+        <option value={"24 fps"}>24</option>
+      </select>
+
+      <h4>crow exlusive</h4>
+      <select onChange={(event) => setCrow_exlusive(event.target.value)} value={crow_exlusive} >
+        <option value={""}>...</option>
+        <option value={"true"}>Yes</option>
+        <option value={"false"}>No</option>
+      </select>
+
+      <h4>trailer qc notes</h4>
+      <input type="text" value={trailer_qc_notes} onChange={(event) => setTrailer_qc_notes(event.target.value)} />
+
+      <h4>country</h4>
+      <select onChange={(event) => setCountry(event.target.value)} value={country} >
+        <option value={""}>...</option>
+        <option value={"nigeria"}>Nigeria</option>
+      </select>
+
+      <h4>year</h4>
+      <input type="text" value={year} onChange={(event) => setYear(event.target.value)} />
+
+      <h4>copyrights</h4>
+      <input type="text" value={copyrights} onChange={(event) => setCopyrights(event.target.value)} />
+
+      <h4>production_company</h4>
+      <input type="text" value={production_company} onChange={(event) => setProduction_company(event.target.value)} />
+
+      <h4>tags</h4>
+      <input type="text" value={tags} onChange={(event) => setTags(event.target.value)} />
+
+      <h4>locations</h4>
+      <input type="text" value={locations} onChange={(event) => setLocations(event.target.value)} />
+
+      <h4>casts</h4>
+      <input type="text" value={casts} onChange={(event) => setCasts(event.target.value)} />
+
+      <h4>vendor_id</h4>
+      <input type="text" value={vendor_id} onChange={(event) => setVendor_id(event.target.value)} />
+
+      <h4>sku</h4>
+      <input type="text" value={sku} onChange={(event) => setSku(event.target.value)} />
+
+      <h4>imdb_id</h4>
+      <input type="text" value={imdb_id} onChange={(event) => setImdb_id(event.target.value)} />
+
+      <h4>imdb_rating</h4>
+      <select onChange={(event) => setImdb_rating(event.target.value)} value={imdb_rating} >
+        <option value={""}>...</option>
+        <option value={"1"}>1</option>
+        <option value={"2"}>2</option>
+        <option value={"3"}>3</option>
+        <option value={"4"}>4</option>
+        <option value={"5"}>5</option>
+        <option value={"6"}>6</option>
+        <option value={"7"}>7</option>
+        <option value={"8"}>8</option>
+        <option value={"9"}>9</option>
+        <option value={"10"}>10</option>
+      </select>
+
+      <h4>imdb_votes</h4>
+      <input type="text" value={imdb_votes} onChange={(event) => setImdb_votes(event.target.value)} />
+
+      <h4>content_rating</h4>
+      <input type="text" placeholder="e.g. 13" value={content_rating} onChange={(event) => setContent_rating(event.target.value)} />
+
+      <h4>content_rating_reasons</h4>
+      <input type="text" value={content_rating_reasons} onChange={(event) => setContent_rating_reasons(event.target.value)} />
+
+      <h4>series</h4>      
+      <select onChange={(event) => setSeries(event.target.value)} value={series} >
+        <option value={""}>...</option>
+        <option value={"true"}>Yes</option>
+        <option value={"false"}>No</option>
+      </select>
+
       <h1>Upload your movie file</h1>
       <div>
         <input
@@ -196,3 +337,33 @@ function App() {
 }
 
 export default App
+
+
+// formData.set("title", "Unpredictable Test")
+// formData.set("genre", "drama")
+// formData.set("qc_notes", "A prediction movie is a film that explores a future scenario or makes projections about what might happen in the future. It often involves elements of science fiction, speculation, and imagination to depict potential advancements, societal changes, or events that have not yet occurred. These movies offer audiences a glimpse into possible futures, sparking curiosity and contemplation about the direction our world could take.")
+// formData.set("video_type", "mp4")
+// formData.set("video_language", "english")
+// formData.set("video_url", movieUrl)
+// formData.set("crow_exlusive", JSON.stringify(false))
+// formData.set("trailer_url", trailerUrl)
+// formData.set("trailer_qc_notes", "A prediction movie is a film that explores a future scenario or makes projections about what might happen in the future.")
+// formData.set("country", "nigeria")
+// formData.set("year", "2023")
+// formData.set("copyrights", "Copyright © 2023 crow+. All rights reserved.")
+// formData.set("production_company", "crow+")
+// formData.set("tags", JSON.stringify(["Action-packed", "Inspiring"]))
+// formData.set("locations", "nigeria")
+// formData.set("casts", JSON.stringify(["Jerry", "Munah", "Francis"]))
+// formData.set("vendor_id", "123456")
+// formData.set("sku", "")
+// formData.set("imdb_id", "1234")
+// formData.set("imdb_rating", "9/10")
+// formData.set("imdb_votes", "2300")
+// formData.set("content_rating", "8/10")
+// formData.set("content_rating_reasons", "Greate content with high quality resolution")
+// formData.set("series", JSON.stringify(false))
+// formData.set("text_tracks", JSON.stringify(false))
+// formData.set("text_tracks", text_tracks)
+// formData.set("text_tracks_kind", text_tracks_kind)
+// formData.set("text_tracks_frame_rate", text_tracks_frame_rate)
