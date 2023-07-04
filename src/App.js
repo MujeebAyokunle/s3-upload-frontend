@@ -37,6 +37,7 @@ function App() {
   const [text_tracks, setText_tracks] = useState('')
   const [text_tracks_kind, setText_tracks_kind] = useState('')
   const [text_tracks_frame_rate, setText_tracks_frame_rate] = useState('')
+  const [release_date, setRelease_date] = useState(new Date())
 
 
 
@@ -168,9 +169,10 @@ function App() {
     formData.set("text_tracks", text_tracks)
     formData.set("text_tracks_kind", text_tracks_kind)
     formData.set("text_tracks_frame_rate", text_tracks_frame_rate)
-
+    formData.set("release_date", release_date)
+    
     try {
-      const complete_resp = await axios.post("http://localhost:8080/api/finalizemovieupload", formData)
+      const complete_resp = await axios.post("https://44.203.134.24.nip.io/api/finalizemovieupload", formData)
 
       console.log("complete_resp", complete_resp)
     } catch (err) {
@@ -290,6 +292,9 @@ function App() {
         <option value={"true"}>Yes</option>
         <option value={"false"}>No</option>
       </select>
+
+      <h4>Release date</h4>
+      <input type="date" value={release_date} onChange={(event) => setRelease_date(event.target.value)} />
 
       <h1>Upload your movie file</h1>
       <div>
