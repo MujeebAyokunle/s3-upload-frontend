@@ -135,7 +135,7 @@ function App() {
 
   const finalizeSubmission = async () => {
     const formData = new FormData()
-
+    console.log("clicked")
     // Images
     formData.append("images", image)
 
@@ -157,20 +157,56 @@ function App() {
     formData.set("production_company", production_company)
     formData.set("tags", JSON.stringify([tags]))
     formData.set("locations", locations)
-    formData.set("casts", JSON.stringify(casts))
+    formData.set("casts", casts)
     formData.set("vendor_id", vendor_id)
+    formData.set("released", "true")
     formData.set("sku", sku)
     formData.set("imdb_id", imdb_id)
     formData.set("imdb_rating", imdb_rating)
     formData.set("imdb_votes", imdb_votes)
     formData.set("content_rating", content_rating)
     formData.set("content_rating_reasons", content_rating_reasons)
-    formData.set("series", JSON.stringify(series))    
+    formData.set("series", "false")
     formData.set("text_tracks", text_tracks)
     formData.set("text_tracks_kind", text_tracks_kind)
     formData.set("text_tracks_frame_rate", text_tracks_frame_rate)
     formData.set("release_date", release_date)
-    
+
+    // let json = {
+    //   images: image,
+    //   logo: logo,
+    //   title: title,
+    //   genre: genre,
+    //   qc_notes: qc_notes,
+    //   video_type: "mp4",
+    //   video_language,
+    //   video_url: 'video_url',
+    //   crow_exlusive,
+    //   trailer_url: 'trailer_url',
+    //   trailer_qc_notes,
+    //   country,
+    //   year,
+    //   copyrights,
+    //   production_company,
+    //   tags,
+    //   locations,
+    //   casts,
+    //   vendor_id,
+    //   released: true,
+    //   sku,
+    //   imdb_id,
+    //   imdb_rating,
+    //   imdb_votes,
+    //   content_rating,
+    //   content_rating_reasons,
+    //   series,
+    //   text_tracks,
+    //   text_tracks_kind,
+    //   text_tracks_frame_rate,
+    //   release_date
+    // }
+    // https://44.203.134.24.nip.io/api/finalizemovieupload
+    // http://localhost:8080/api/finalizemovieupload
     try {
       const complete_resp = await axios.post("https://44.203.134.24.nip.io/api/finalizemovieupload", formData)
 
@@ -286,7 +322,7 @@ function App() {
       <h4>content_rating_reasons</h4>
       <input type="text" value={content_rating_reasons} onChange={(event) => setContent_rating_reasons(event.target.value)} />
 
-      <h4>series</h4>      
+      <h4>series</h4>
       <select onChange={(event) => setSeries(event.target.value)} value={series} >
         <option value={""}>...</option>
         <option value={"true"}>Yes</option>
