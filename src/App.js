@@ -1,7 +1,8 @@
 import "./App.css"
 import { Uploader } from "./utils/upload"
-import { useState } from "react"
+import React, { useState, useEffect } from "react"
 import axios from "axios"
+import useSocket from './socket'
 
 function App() {
   const [file, setFile] = useState(undefined)
@@ -39,12 +40,21 @@ function App() {
   const [text_tracks_frame_rate, setText_tracks_frame_rate] = useState('')
   const [release_date, setRelease_date] = useState(new Date())
 
+  const {socketRef} = useSocket()
 
+  console.log("socketRef", socketRef)
 
+  useEffect(() => {
+    socketRef.current.on("new/notification", (data) => {
+      console.log(data)
+    })
 
-  // useEffect(() => {
+    socketRef.current.on("no/notification", (data) => {
+      console.log(data)
+    })
+  }, [socketRef.current])
 
-  // }, [file])
+  
   // console.log("file", file?.name)
   const onCancel = () => {
     if (uploader) {
@@ -172,41 +182,6 @@ function App() {
     formData.set("text_tracks_frame_rate", text_tracks_frame_rate)
     formData.set("release_date", release_date)
 
-    // let json = {
-    //   images: image,
-    //   logo: logo,
-    //   title: title,
-    //   genre: genre,
-    //   qc_notes: qc_notes,
-    //   video_type: "mp4",
-    //   video_language,
-    //   video_url: 'video_url',
-    //   crow_exlusive,
-    //   trailer_url: 'trailer_url',
-    //   trailer_qc_notes,
-    //   country,
-    //   year,
-    //   copyrights,
-    //   production_company,
-    //   tags,
-    //   locations,
-    //   casts,
-    //   vendor_id,
-    //   released: true,
-    //   sku,
-    //   imdb_id,
-    //   imdb_rating,
-    //   imdb_votes,
-    //   content_rating,
-    //   content_rating_reasons,
-    //   series,
-    //   text_tracks,
-    //   text_tracks_kind,
-    //   text_tracks_frame_rate,
-    //   release_date
-    // }
-    // https://44.203.134.24.nip.io/api/finalizemovieupload
-    // http://localhost:8080/api/finalizemovieupload
     try {
       const complete_resp = await axios.post("https://44.203.134.24.nip.io/api/finalizemovieupload", formData)
 
@@ -379,6 +354,43 @@ function App() {
 
 export default App
 
+
+    // let json = {
+    //   images: image,
+    //   logo: logo,
+    //   title: title,
+    //   genre: genre,
+    //   qc_notes: qc_notes,
+    //   video_type: "mp4",
+    //   video_language,
+    //   video_url: 'video_url',
+    //   crow_exlusive,
+    //   trailer_url: 'trailer_url',
+    //   trailer_qc_notes,
+    //   country,
+    //   year,
+    //   copyrights,
+    //   production_company,
+    //   tags,
+    //   locations,
+    //   casts,
+    //   vendor_id,
+    //   released: true,
+    //   sku,
+    //   imdb_id,
+    //   imdb_rating,
+    //   imdb_votes,
+    //   content_rating,
+    //   content_rating_reasons,
+    //   series,
+    //   text_tracks,
+    //   text_tracks_kind,
+    //   text_tracks_frame_rate,
+    //   release_date
+    // }
+    // https://44.203.134.24.nip.io/api/finalizemovieupload
+    // http://localhost:8080/api/finalizemovieupload
+    
 
 // formData.set("title", "Unpredictable Test")
 // formData.set("genre", "drama")
