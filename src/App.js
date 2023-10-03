@@ -42,7 +42,7 @@ function App() {
 
   const {socketRef} = useSocket()
 
-  console.log("socketRef", socketRef)
+  // console.log("socketRef", socketRef)
 
   useEffect(() => {
     socketRef.current.on("new/notification", (data) => {
@@ -50,6 +50,10 @@ function App() {
     })
 
     socketRef.current.on("no/notification", (data) => {
+      console.log(data)
+    })
+
+    socketRef.current.on("minutes/save/error", (data) => {
       console.log(data)
     })
   }, [socketRef.current])
@@ -66,7 +70,10 @@ function App() {
   }
 
   const submitMovie = () => {
-    if (file && trailerfile && logo && image) {
+    // && trailerfile && logo && image
+    console.log(logo)
+    if (file ) {
+      console.log("clicked")
       const videoUploaderOptions = {
         fileName: file?.name,
         file: file,
@@ -144,51 +151,130 @@ function App() {
   }
 
   const finalizeSubmission = async () => {
-    const formData = new FormData()
-    console.log("clicked")
-    // Images
-    formData.append("images", image)
 
-    // Logo
-    formData.set("logo", logo)
+    let movieArray = [
+      {
+        name: "The Quantum Paradox: Time's Tangled Web",
+        detail: "Exploring the complexities of time travel and its paradoxes."
+      },
+      {
+        name: "Celestial Crusaders: Guardians of the Cosmos",
+        detail: "Defending the universe from cosmic threats and ancient evils."
+      },
+      {
+        name: "Lost in the Labyrinth: Maze of Mystery",
+        detail: "Adventurers navigating a labyrinth filled with puzzles and traps."
+      },
+      {
+        name: "Echoes of Eternity: Ancient Prophecies",
+        detail: "Unraveling prophecies that hold the fate of the world."
+      },
+      {
+        name: "Chronicles of the Elemental Sages",
+        detail: "Masters of the elements battling for balance and harmony."
+      },
+      {
+        name: "The Enchanted Isles: Mythical Adventures",
+        detail: "Exploring mystical islands with magical creatures and artifacts."
+      },
+      {
+        name: "Cipher Society: Cryptanalysis Chronicles",
+        detail: "Cracking codes, ciphers, and encrypted secrets."
+      },
+      {
+        name: "Galactic Pioneers: New Worlds Awaits",
+        detail: "Frontier colonists on a quest for a new habitable planet."
+      },
+      {
+        name: "The Nexus Experiment: Reality's Nexus",
+        detail: "A scientific experiment connecting multiple dimensions."
+      },
+      {
+        name: "Serpent's Curse: Ancient Artifacts Quest",
+        detail: "Searching for cursed relics and their hidden powers."
+      },
+      {
+        name: "Mysteries of the Subterranean City",
+        detail: "Exploring an underground city with enigmatic inhabitants."
+      },
+      {
+        name: "The Forgotten Galaxy: Relics of the Past",
+        detail: "Discovering ancient artifacts in an uncharted galaxy."
+      },
+      {
+        name: "Secrets of the Celestial Library",
+        detail: "Guardians protecting a library of cosmic knowledge."
+      },
+      {
+        name: "Spectral Investigations: Ghosthunter's Diary",
+        detail: "Documenting encounters with supernatural entities."
+      },
+      {
+        name: "Enigma of the Cosmic Key",
+        detail: "A quest to find a mysterious key with cosmic powers."
+      }
+    ];
 
-    formData.set("title", title)
-    formData.set("genre", genre)
-    formData.set("qc_notes", qc_notes)
-    formData.set("video_type", "mp4")
-    formData.set("video_language", video_language)
-    formData.set("video_url", movieUrl)
-    formData.set("crow_exlusive", crow_exlusive)
-    formData.set("trailer_url", trailerUrl)
-    formData.set("trailer_qc_notes", trailer_qc_notes)
-    formData.set("country", country)
-    formData.set("year", year)
-    formData.set("copyrights", copyrights)
-    formData.set("production_company", production_company)
-    formData.set("tags", JSON.stringify([tags]))
-    formData.set("locations", locations)
-    formData.set("casts", casts)
-    formData.set("vendor_id", vendor_id)
-    formData.set("released", "true")
-    formData.set("sku", sku)
-    formData.set("imdb_id", imdb_id)
-    formData.set("imdb_rating", imdb_rating)
-    formData.set("imdb_votes", imdb_votes)
-    formData.set("content_rating", content_rating)
-    formData.set("content_rating_reasons", content_rating_reasons)
-    formData.set("series", "false")
-    formData.set("text_tracks", text_tracks)
-    formData.set("text_tracks_kind", text_tracks_kind)
-    formData.set("text_tracks_frame_rate", text_tracks_frame_rate)
-    formData.set("release_date", release_date)
-
-    try {
-      const complete_resp = await axios.post("https://44.203.134.24.nip.io/api/finalizemovieupload", formData)
-
-      console.log("complete_resp", complete_resp)
-    } catch (err) {
-      console.log("final error", err)
+    for (let k = 0; k < movieArray.length; k++) {
+      const movie_data = movieArray[k];
+      for (let j = 1; j < 3; j++) {
+        for (let i = 1; i < 12; i++) {
+          // const movie_data = movieArray;
+          // movieUrl
+          const formData = new FormData()
+          console.log("clicked")
+          // Images
+          formData.append("images", image)
+      
+          // Logo
+          formData.set("logo", logo)
+      
+          formData.set("title", movie_data.name)
+          formData.set("genre", genre)
+          formData.set("qc_notes", movie_data.detail)
+          formData.set("video_type", "mp4")
+          formData.set("video_language", 'english')
+          formData.set("video_url", "https://crowplus-videos.s3.amazonaws.com/How+to+Get+Addicted+to+Studying+_+How+to+Develop+Interest+in+Studies.mp4.mp4")
+          formData.set("crow_exlusive", crow_exlusive)
+          formData.set("trailer_url", "https://crowplus-videos.s3.amazonaws.com/How+to+Get+Addicted+to+Studying+_+How+to+Develop+Interest+in+Studies.mp4.mp4")
+          formData.set("trailer_qc_notes", movie_data.detail)
+          formData.set("country", "Nigeria")
+          formData.set("year", "2023")
+          formData.set("copyrights", "copyrights")
+          formData.set("season", j)
+          formData.set("episode", i)
+          formData.set("production_company", "Alabian")
+          formData.set("tags", JSON.stringify(["cool"]))
+          formData.set("locations", "Nigeria")
+          formData.set("casts", JSON.stringify(["Mujeeb", 'Kay', "Francis"]))
+          formData.set("vendor_id", "1")
+          formData.set("released", "true")
+          formData.set("sku", "sku")
+          formData.set("imdb_id", "24345")
+          formData.set("imdb_rating", "13")
+          formData.set("imdb_votes", "34564")
+          formData.set("content_rating", "10")
+          formData.set("content_rating_reasons", "crime")
+          formData.set("series", "true")
+          formData.set("text_tracks", "text_tracks")
+          formData.set("text_tracks_kind", "text_tracks_kind")
+          formData.set("text_tracks_frame_rate", "text_tracks_frame_rate")
+          formData.set("release_date", release_date)
+      
+          try {
+            const complete_resp = await axios.post("https://44.203.134.24.nip.io/api/finalizemovieupload", formData)
+      
+            console.log("complete_resp", complete_resp)
+          } catch (err) {
+            console.log("final error", err)
+          }
+        }
+      }
     }
+
+
+
+
 
   }
 
@@ -201,6 +287,22 @@ function App() {
       <select onChange={(event) => setGenre(event.target.value)} value={genre} >
         <option value={""}>...</option>
         <option value={"drama"}>Drama</option>
+        <option value={"action"}>action</option>
+        <option value={"adventure"}>adventure</option>
+        <option value={"animation"}>animation</option>
+        <option value={"comedy"}>comedy</option>
+        <option value={"crime"}>crime</option>
+        <option value={"documentary"}>documentary</option>
+        <option value={"family"}>family</option>
+        <option value={"fantasy"}>fantasy</option>
+        <option value={"horror"}>horror</option>
+        <option value={"musical"}>musical</option>
+        <option value={"romance"}>romance</option>
+        <option value={"science"}>science</option>
+        <option value={"fiction"}>fiction</option>
+        <option value={"thriller"}>thriller</option>
+        <option value={"war"}>War</option>
+        <option value={"western"}>western</option>
       </select>
 
       <h4>qc notes</h4>
@@ -346,7 +448,7 @@ function App() {
       </div>
       <div>
         <button onClick={onCancel}>Cancel</button>
-        <button onClick={submitMovie}>Submit movie</button>
+        <button onClick={finalizeSubmission}>Submit movie</button>
       </div>
     </div>
   )

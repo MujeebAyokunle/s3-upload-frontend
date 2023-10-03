@@ -15,10 +15,11 @@ const useSocket = () => {
         })
             .on('connect', () => {
                 console.log("connected to socket server")
-                socketRef?.current?.emit('admin/notification', {});
+                // socketRef?.current?.emit('admin/notification', {});
                 // socketRef?.current?.on('admin/notification', data => {
                 //     console.log('admin message', data);
                 // });
+                socketRef?.current?.emit('minutes_watched', { profile_id: 12, movie_id: 20, series_id: 1, minutes_watched: 50, total_movie_length: 200 });
             })
             .on('disconnect', () => {
                 console.log("disconnected")
